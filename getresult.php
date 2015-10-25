@@ -14,13 +14,23 @@
 	$new = new News();
 	$newscontent = $new->parseHTML();
 	$mysql = new Mysql();
+	$configs = $mysql->getContent('config');
+	$configs = explode(",", $configs);
 	$todolist = $mysql->getContent('todolist');
 	$todolist = explode(",", $todolist);
 	$result = "";
-	$result .= join("#", $weathers);
-	$result .= "#";
-	$result .= join("#", $newscontent);
-	$result .= "#";
-	$result .= join('#', $todolist);
-
+	foreach ($configs as $key => $value) {
+		if ($value == 1) {
+			$result .= join("#", $weathers);
+			$result .= "#";
+		} 
+		if ($value == 2) {
+			$result .= join("#", $newscontent);
+			$result .= "#";
+		}
+		if ($value == 3) {
+			$result .= join('#', $todolist);
+		}
+	}
+	
 	echo $result;
